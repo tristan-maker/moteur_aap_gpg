@@ -1,25 +1,27 @@
 import os
-from typing import Any, Dict
+import logging
+from typing import Dict, Any
+from google.adk.tools.mcp_tool import McpToolset
+from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
+from mcp import StdioServerParameters
 
-try:
-    from google.adk.tools.mcp_tool import McpToolset
-    from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
-    from mcp import StdioServerParameters
-    HAS_MCP_DEPS = True
-except ImportError:
-    HAS_MCP_DEPS = False
-    McpToolset = Any  # type: ignore
+logger = logging.getLogger("GravirPourGrandir.MCPHarvester")
 
 
-def initialize_h_company_mcp_toolset() -> Any:
-    """Instancie le toolset MCP H Company pour la navigation dynamique."""
-    if not HAS_MCP_DEPS:
-        raise ImportError(
-            "Les dépendances MCP sont manquantes. "
-            "Installez-les via : pip install \"google-adk[mcp]\" mcp"
+def initialize_h_company_mcp_toolset() -> McpToolset:
+    """Instancie le toolset MCP H Company pour la navigation dynamique et le téléchargement.
+
+    Returns:
+        McpToolset: Outil MCP configuré pour l'ADK.
+
+    Raises:
+        ValueError: Si la clé d'API H_COMPANY_API_KEY est absente de l'environnement.
+    """
+    api_key = os.environ.get("H_COMPANY_API_KEY")
+    if not api_key:
+        raise ValueError(
+            "CRITICAL: La clé H_COMPANY_API_KEY est absente de l'environnement."
         )
-
-    api_key = os.environ.get("H_COMPANY_API_KEY", "mock_h_company_key")
 
     return McpToolset(
         connection_params=StdioConnectionParams(
@@ -49,39 +51,24 @@ def initialize_h_company_mcp_toolset() -> Any:
     )
 
 
-class MockMcpFormHarvester:
-    """Harvesteur de formulaire simulant l'inspection DOM MCP hors-ligne."""
+def mock_harvest_aap_content(url: str) -> Dict[str, Any]:
+    """Bouchon (Mock) pour l'extraction de contenu sans appel au serveur MCP externe.
 
-    def extract_target_form_schema(
-        self, portal_url: str, aap_id: str
-    ) -> Dict[str, Any]:
-        """Simule l'extraction de la structure d'un formulaire de candidature."""
-        return {
-            "aap_id": aap_id,
-            "portal_url": portal_url,
-            "form_fields": [
-                {
-                    "field_id": "q1_pitch",
-                    "question_label": "Présentation synthétique du projet",
-                    "character_limit": 1000,
-                    "expected_content_type": "narrative",
-                },
-                {
-                    "field_id": "q2_impact_qpv",
-                    "question_label": "Impact mesurable sur les jeunes des QPV et mentorat",
-                    "character_limit": 1800,
-                    "expected_content_type": "narrative",
-                },
-                {
-                    "field_id": "q3_budget_total",
-                    "question_label": "Montant total du projet et subvention sollicitée",
-                    "character_limit": 500,
-                    "expected_content_type": "budget",
-                },
-            ],
-            "mandatory_attachments": [
-                "RIB_Association.pdf",
-                "Statuts_GPG_2026.pdf",
-                "Attestation_Rescrit_Fiscal.pdf",
-            ],
-        }
+    Args:
+        url (str): URL du portail AAP à ingérer.
+
+    Returns:
+        Dict[str, Any]: Contenu extrait simulé sous forme de dictionnaire structuré.
+    """
+    logger.info(f"[MOCK MCP] Ingestion simulée du contenu depuis : {url}")
+    return {
+        "status": "success",
+        "url": url,
+        "extracted_text": (
+            "Appel à Projets 2026 - Inclusion et Sport de Montagne.\n"
+            "Objectif : Financer des projets favorisant l'insertion des jeunes QPV.\n"
+            "Plafond de subvention : 15 000 EUR. Date limite : 2026-10-31."
+        ),
+        "raw_dom_length": 1420,
+        "has_pdf_attachments": True,
+    }

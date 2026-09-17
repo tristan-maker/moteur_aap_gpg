@@ -1,36 +1,38 @@
-import sys
 from decimal import Decimal
 from budget_engine import calculate_itemized_budget
-from schemas import FinancialApplicationPlan
 
 
-def test_budget_calculation_exactness():
-    raw_plan = calculate_itemized_budget(
-        total_grant_requested=8000.00, cohort_size=10, aap_id="hash_1"
-    )
+def test_budget_arithmetic_exactness():
+    # Demande de 10 000 € sur un projet de 15 000 € (10 binômes)
+    result = calculate_itemized_budget(total_grant_requested=10000.0, cohort_size=10)
 
-    plan = FinancialApplicationPlan(**raw_plan)
+    assert result["status"] == "success"
+    assert result["total_project_cost"] == 15000.0
+    assert result["total_grant_requested"] == 10000.0
+    assert result["total_self_financing"] == 5000.0
 
-    assert plan.total_project_cost == Decimal("15000.00")
-    assert plan.total_grant_requested == Decimal("8000.00")
-    assert plan.total_self_financing == Decimal("7000.00")
+    # Vérification comptable : Somme des lignes = Totaux
+    calculated_grant = sum(item["grant_allocation_euro"] for item in result["budget_breakdown"])
+    calculated_self = sum(item["association_share_euro"] for item in result["budget_breakdown"])
+    calculated_total = sum(item["total_cost_euro"] for item in result["budget_breakdown"])
 
-    allocated_grant_sum = sum(
-        item.grant_allocation_euro for item in plan.budget_breakdown
-    )
-    assert allocated_grant_sum == plan.total_grant_requested
+    assert Decimal(str(calculated_grant)) == Decimal("10000.00")
+    assert Decimal(str(calculated_self)) == Decimal("5000.00")
+    assert Decimal(str(calculated_total)) == Decimal("15000.00")
+    print("✔ Test Arithmétique & Ventilation Budgétaire : Réussi")
 
-    total_cost_sum = sum(
-        item.total_cost_euro for item in plan.budget_breakdown
-    )
-    assert total_cost_sum == plan.total_project_cost
 
-    print("✅ TEST MOTEUR BUDGÉTAIRE RÉUSSI.")
+def test_budget_capping():
+    # Demande excessive de 20 000 € alors que le besoin projet est de 15 000 €
+    result = calculate_itemized_budget(total_grant_requested=20000.0, cohort_size=10)
+
+    assert result["total_grant_requested"] == 15000.0
+    assert result["total_self_financing"] == 0.0
+    print("✔ Test Plafond Automatique : Réussi")
 
 
 if __name__ == "__main__":
-    try:
-        test_budget_calculation_exactness()
-    except Exception as e:
-        print(f"❌ ÉCHEC DU TEST : {e}")
-        sys.exit(1)
+    print("=== Exécution des tests unitaires locaux pour budget_engine.py ===")
+    test_budget_arithmetic_exactness()
+    test_budget_capping()
+    print("✅ Validation complète du module budget_engine.py effectuée avec succès !")

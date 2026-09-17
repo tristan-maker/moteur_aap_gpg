@@ -1,0 +1,408 @@
+{
+  "eval_set_result_id": "moteur_aap_gpg_moteur_aap_eval_set_1789656913.6743624",
+  "eval_set_result_name": "moteur_aap_gpg_moteur_aap_eval_set_1789656913.6743624",
+  "eval_set_id": "moteur_aap_eval_set",
+  "eval_case_results": [
+    {
+      "eval_set_file": "moteur_aap_eval_set",
+      "eval_set_id": "moteur_aap_eval_set",
+      "eval_id": "eval_query_expansion_01",
+      "final_eval_status": 2,
+      "eval_metric_results": null,
+      "overall_eval_metric_results": [],
+      "eval_metric_result_per_invocation": [],
+      "session_id": "___eval___session___bfb5f36c-557a-4d43-a3b3-bc8e2ce4bb72",
+      "session_details": {
+        "id": "___eval___session___bfb5f36c-557a-4d43-a3b3-bc8e2ce4bb72",
+        "app_name": "moteur_aap_gpg",
+        "user_id": "eval_user",
+        "state": {
+          "__llm_request_key__": "0f3aab05-95da-43fa-9347-9279e77e544c"
+        },
+        "events": [
+          {
+            "model_version": null,
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "Génère les dorks de recherche pour les financements QPV et montagne 2026.",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null,
+                  "tool_call": null,
+                  "tool_response": null,
+                  "part_metadata": null,
+                  "audio_transcription": null
+                }
+              ],
+              "role": "user"
+            },
+            "grounding_metadata": null,
+            "partial": null,
+            "turn_complete": null,
+            "turn_complete_reason": null,
+            "finish_reason": null,
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": null,
+            "usage_metadata": null,
+            "live_session_resumption_update": null,
+            "live_session_id": null,
+            "go_away": null,
+            "voice_activity": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "environment_id": null,
+            "invocation_id": "e-cb0a8f14-1d1c-4ed4-b70c-c2699b035cc3",
+            "author": "user",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {},
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null,
+              "route": null,
+              "render_ui_widgets": null,
+              "set_model_response": null
+            },
+            "output": null,
+            "node_info": {
+              "path": "",
+              "output_for": null,
+              "message_as_output": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "isolation_scope": null,
+            "id": "8b38a6c6-f4e6-4e26-8719-c11f0154d0e4",
+            "timestamp": 1789656882.3900616
+          },
+          {
+            "model_version": "gemini-2.5-flash",
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "{\n  \"generated_dorks\": [\n    {\n      \"query_string\": \"\\\"appel à projets\\\" OR \\\"subvention\\\" OR \\\"fonds de dotation\\\" OR \\\"mécénat\\\" 2026 (\\\"Quartiers prioritaires\\\" OR \\\"QPV\\\" OR \\\"jeunesse défavorisée\\\") (\\\"Sport de pleine nature\\\" OR \\\"montagne\\\" OR \\\"alpinisme\\\" OR \\\"séjour de rupture éducative\\\") -inurl:formation -inurl:article -inurl:blog -site:lemonde.fr -site:lefigaro.fr -site:liberation.fr -site:lexpress.fr -site:challenges.fr -site:bfmtv.com -site:lesechos.fr\",\n      \"strategic_rationale\": \"Financements directs pour la jeunesse des QPV via des activités montagne ou sport de pleine nature.\",\n      \"priority_level\": \"HAUTE\"\n    },\n    {\n      \"query_string\": \"\\\"appel à projets\\\" OR \\\"subvention\\\" OR \\\"fonds de dotation\\\" OR \\\"mécénat\\\" 2026 (\\\"inclusion sociale\\\" OR \\\"décrochage\\\") (\\\"Sport de pleine nature\\\" OR \\\"montagne\\\" OR \\\"dépassement de soi\\\") (\\\"Fondations familiales\\\" OR \\\"fonds de dotation\\\" OR \\\"ministères\\\" OR \\\"régions\\\") -inurl:formation -inurl:article -inurl:blog -site:lemonde.fr -site:lefigaro.fr -site:liberation.fr -site:lexpress.fr -site:challenges.fr -site:bfmtv.com -site:lesechos.fr\",\n      \"strategic_rationale\": \"Opportunités de financement pour l'inclusion sociale et la lutte contre le décrochage via le sport outdoor, ciblées sur des financeurs institutionnels et privés.\",\n      \"priority_level\": \"HAUTE\"\n    },\n    {\n      \"query_string\": \"\\\"appel à projets\\\" OR \\\"subvention\\\" OR \\\"fonds de dotation\\\" OR \\\"mécénat\\\" 2026 (\\\"Quartiers prioritaires\\\" OR \\\"QPV\\\" OR \\\"égalité des chances\\\") (\\\"Sport de pleine nature\\\" OR \\\"montagne\\\") (\\\"Mentorat en entreprise\\\" OR \\\"mécénat de compétences\\\" OR \\\"fondations abritées\\\") -inurl:formation -inurl:article -inurl:blog -site:lemonde.fr -site:lefigaro.fr -site:liberation.fr -site:lexpress.fr -site:challenges.fr -site:bfmtv.com -site:lesechos.fr\",\n      \"strategic_rationale\": \"Recherche de soutiens pour des programmes de mentorat ou de mécénat de compétences favorisant l'égalité des chances en QPV via des expériences en montagne.\",\n      \"priority_level\": \"MOYENNE\"\n    },\n    {\n      \"query_string\": \"\\\"appel à projets\\\" OR \\\"subvention\\\" OR \\\"fonds de dotation\\\" OR \\\"mécénat\\\" 2026 (\\\"E2C\\\" OR \\\"missions locales\\\") (\\\"séjour de rupture éducative\\\" OR \\\"montagne\\\" OR \\\"alpinisme\\\") -inurl:formation -inurl:article -inurl:blog -site:lemonde.fr -site:lefigaro.fr -site:liberation.fr -site:lexpress.fr -site:challenges.fr -site:bfmtv.com -site:lesechos.fr\",\n      \"strategic_rationale\": \"Financements spécifiques pour des partenariats avec les E2C ou Missions Locales axés sur des séjours de rupture éducative en milieu montagnard.\",\n      \"priority_level\": \"MOYENNE\"\n    },\n    {\n      \"query_string\": \"\\\"appel à projets\\\" OR \\\"subvention\\\" OR \\\"fonds de dotation\\\" OR \\\"mécénat\\\" 2026 (\\\"jeunesse défavorisée\\\" OR \\\"Quartiers prioritaires\\\") (\\\"montagne\\\" OR \\\"sport de pleine nature\\\") (\\\"mécénats d'assurances\\\" OR \\\"mécénats de banques\\\" OR \\\"comités d'entreprise\\\") -inurl:formation -inurl:article -inurl:blog -site:lemonde.fr -site:lefigaro.fr -site:liberation.fr -site:lexpress.fr -site:challenges.fr -site:bfmtv.com -site:lesechos.fr\",\n      \"strategic_rationale\": \"Ciblage direct des programmes de mécénat émanant des secteurs de l'assurance, de la banque ou des comités d'entreprise pour des projets montagne/outdoor en direction des QPV.\",\n      \"priority_level\": \"MOYENNE\"\n    }\n  ],\n  \"execution_horizon_year\": 2026\n}",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null,
+                  "tool_call": null,
+                  "tool_response": null,
+                  "part_metadata": null,
+                  "audio_transcription": null
+                }
+              ],
+              "role": "model"
+            },
+            "grounding_metadata": null,
+            "partial": null,
+            "turn_complete": null,
+            "turn_complete_reason": null,
+            "finish_reason": "STOP",
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": {
+              "__llm_request_key__": "0f3aab05-95da-43fa-9347-9279e77e544c"
+            },
+            "usage_metadata": {
+              "cache_tokens_details": null,
+              "cached_content_token_count": null,
+              "candidates_token_count": 1093,
+              "candidates_tokens_details": [
+                {
+                  "modality": "TEXT",
+                  "token_count": 1093
+                }
+              ],
+              "prompt_token_count": 507,
+              "prompt_tokens_details": [
+                {
+                  "modality": "TEXT",
+                  "token_count": 507
+                }
+              ],
+              "thoughts_token_count": 2851,
+              "tool_use_prompt_token_count": null,
+              "tool_use_prompt_tokens_details": null,
+              "total_token_count": 4451,
+              "traffic_type": "ON_DEMAND"
+            },
+            "live_session_resumption_update": null,
+            "live_session_id": null,
+            "go_away": null,
+            "voice_activity": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": -0.453565759824594,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "environment_id": null,
+            "invocation_id": "e-cb0a8f14-1d1c-4ed4-b70c-c2699b035cc3",
+            "author": "QueryExpansionSpecialist",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {
+                "__llm_request_key__": "0f3aab05-95da-43fa-9347-9279e77e544c"
+              },
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null,
+              "route": null,
+              "render_ui_widgets": null,
+              "set_model_response": null
+            },
+            "output": null,
+            "node_info": {
+              "path": "",
+              "output_for": null,
+              "message_as_output": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "isolation_scope": null,
+            "id": "3064db5d-7173-4dfb-85dd-60ee16da0e6f",
+            "timestamp": 1789656883.4578726
+          }
+        ],
+        "last_update_time": 1789656883.4578726
+      },
+      "user_id": "eval_user"
+    },
+    {
+      "eval_set_file": "moteur_aap_eval_set",
+      "eval_set_id": "moteur_aap_eval_set",
+      "eval_id": "eval_strategic_scoring_02",
+      "final_eval_status": 2,
+      "eval_metric_results": null,
+      "overall_eval_metric_results": [],
+      "eval_metric_result_per_invocation": [],
+      "session_id": "___eval___session___af8c4a9f-98bf-4c96-8780-fc50118b09a3",
+      "session_details": {
+        "id": "___eval___session___af8c4a9f-98bf-4c96-8780-fc50118b09a3",
+        "app_name": "moteur_aap_gpg",
+        "user_id": "eval_user",
+        "state": {
+          "__llm_request_key__": "d3ff36dc-a76b-4355-8586-e563155dd447"
+        },
+        "events": [
+          {
+            "model_version": null,
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "Évalue cet AAP : Projet d'ascension du Mont-Blanc pour 10 jeunes de banlieue parrainés par des cadres.",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null,
+                  "tool_call": null,
+                  "tool_response": null,
+                  "part_metadata": null,
+                  "audio_transcription": null
+                }
+              ],
+              "role": "user"
+            },
+            "grounding_metadata": null,
+            "partial": null,
+            "turn_complete": null,
+            "turn_complete_reason": null,
+            "finish_reason": null,
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": null,
+            "usage_metadata": null,
+            "live_session_resumption_update": null,
+            "live_session_id": null,
+            "go_away": null,
+            "voice_activity": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "environment_id": null,
+            "invocation_id": "e-4c52b10b-a3b6-4313-8db4-fe10107f56f4",
+            "author": "user",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {},
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null,
+              "route": null,
+              "render_ui_widgets": null,
+              "set_model_response": null
+            },
+            "output": null,
+            "node_info": {
+              "path": "",
+              "output_for": null,
+              "message_as_output": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "isolation_scope": null,
+            "id": "ce43a0da-202c-46a6-8c14-e442b6432a5a",
+            "timestamp": 1789656883.5949123
+          },
+          {
+            "model_version": "gemini-2.5-flash",
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "{\n  \"generated_dorks\": [\n    {\n      \"query_string\": \"(\\\"quartiers prioritaires\\\" OR \\\"jeunes défavorisés\\\" OR \\\"inclusion sociale\\\") AND (\\\"sport pleine nature\\\" OR \\\"montagne\\\" OR \\\"alpinisme\\\" OR \\\"dépassement de soi\\\") AND (\\\"appel à projets\\\" OR \\\"subvention\\\" OR \\\"fonds de dotation\\\" OR \\\"mécénat\\\") 2026 -inurl:formation -formation -cours -emploi -stage -actualite -presse -blog -forum -avis\",\n      \"strategic_rationale\": \"Financement direct pour projets sportifs en montagne pour jeunes des QPV ou défavorisés, ciblant des appels à projets généralistes.\",\n      \"priority_level\": \"HAUTE\"\n    },\n    {\n      \"query_string\": \"(\\\"jeunesse défavorisée\\\" OR \\\"égalité des chances\\\") AND (\\\"séjour de rupture éducative\\\" OR \\\"montagne\\\" OR \\\"alpinisme\\\") AND (\\\"mentorat en entreprise\\\" OR \\\"mécénat de compétences\\\") AND (\\\"appel à projets\\\" OR \\\"fonds de dotation\\\" OR \\\"mécénat\\\") 2026 -inurl:formation -formation -cours -emploi -stage -actualite -presse -blog -forum -avis\",\n      \"strategic_rationale\": \"Recherche de partenaires (fondations, entreprises) pour des projets combinant sport de rupture et mentorat professionnel.\",\n      \"priority_level\": \"HAUTE\"\n    },\n    {\n      \"query_string\": \"(\\\"QPV\\\" OR \\\"missions locales\\\" OR \\\"décrochage\\\") AND (\\\"montagne\\\" OR \\\"sport outdoor\\\") AND (\\\"fondations familiales\\\" OR \\\"fonds de dotation\\\" OR \\\"mécénat\\\") AND (\\\"appel à projets\\\" OR \\\"subvention\\\") 2026 -inurl:formation -formation -cours -emploi -stage -actualite -presse -blog -forum -avis\",\n      \"strategic_rationale\": \"Ciblage spécifique des fondations et fonds de dotation finançant des initiatives pour l'insertion par le sport en montagne.\",\n      \"priority_level\": \"MOYENNE\"\n    },\n    {\n      \"query_string\": \"(\\\"jeunesse\\\" OR \\\"inclusion\\\") AND (\\\"alpinisme\\\" OR \\\"dépassement de soi\\\") AND (\\\"ministères\\\" OR \\\"régions\\\" OR \\\"comités d'entreprise\\\") AND (\\\"appel à projets\\\" OR \\\"subvention\\\") 2026 -inurl:formation -formation -cours -emploi -stage -actualite -presse -blog -forum -avis\",\n      \"strategic_rationale\": \"Détection d'opportunités de financement public ou semi-public pour des projets sportifs à fort impact social.\",\n      \"priority_level\": \"MOYENNE\"\n    },\n    {\n      \"query_string\": \"(\\\"E2C\\\" OR \\\"jeunes de banlieue\\\") AND (\\\"sport de pleine nature\\\" OR \\\"montagne\\\") AND (\\\"mécénat assurances\\\" OR \\\"mécénat banques\\\") AND (\\\"appel à projets\\\" OR \\\"mécénat\\\") 2026 -inurl:formation -formation -cours -emploi -stage -actualite -presse -blog -forum -avis\",\n      \"strategic_rationale\": \"Exploration des programmes de mécénat spécifiques des secteurs assurance et banque pour des projets d'insertion par le sport outdoor.\",\n      \"priority_level\": \"EXPLORATION\"\n    }\n  ],\n  \"execution_horizon_year\": 2026\n}",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null,
+                  "tool_call": null,
+                  "tool_response": null,
+                  "part_metadata": null,
+                  "audio_transcription": null
+                }
+              ],
+              "role": "model"
+            },
+            "grounding_metadata": null,
+            "partial": null,
+            "turn_complete": null,
+            "turn_complete_reason": null,
+            "finish_reason": "STOP",
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": {
+              "__llm_request_key__": "d3ff36dc-a76b-4355-8586-e563155dd447"
+            },
+            "usage_metadata": {
+              "cache_tokens_details": null,
+              "cached_content_token_count": null,
+              "candidates_token_count": 801,
+              "candidates_tokens_details": [
+                {
+                  "modality": "TEXT",
+                  "token_count": 801
+                }
+              ],
+              "prompt_token_count": 515,
+              "prompt_tokens_details": [
+                {
+                  "modality": "TEXT",
+                  "token_count": 515
+                }
+              ],
+              "thoughts_token_count": 1381,
+              "tool_use_prompt_token_count": null,
+              "tool_use_prompt_tokens_details": null,
+              "total_token_count": 2697,
+              "traffic_type": "ON_DEMAND"
+            },
+            "live_session_resumption_update": null,
+            "live_session_id": null,
+            "go_away": null,
+            "voice_activity": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": -0.3907056563207124,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "environment_id": null,
+            "invocation_id": "e-4c52b10b-a3b6-4313-8db4-fe10107f56f4",
+            "author": "QueryExpansionSpecialist",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {
+                "__llm_request_key__": "d3ff36dc-a76b-4355-8586-e563155dd447"
+              },
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null,
+              "route": null,
+              "render_ui_widgets": null,
+              "set_model_response": null
+            },
+            "output": null,
+            "node_info": {
+              "path": "",
+              "output_for": null,
+              "message_as_output": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "isolation_scope": null,
+            "id": "994a46ac-6ac7-48a4-b37b-86aa98d6ec06",
+            "timestamp": 1789656883.598635
+          }
+        ],
+        "last_update_time": 1789656883.598635
+      },
+      "user_id": "eval_user"
+    }
+  ],
+  "creation_timestamp": 1789656913.6743624
+}
