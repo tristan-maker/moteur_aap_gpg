@@ -1,0 +1,3 @@
+{"user_input": "Génère la matrice de dorks de recherche pour les financements 2026.", "expected_state_keys": ["temp:generated_queries"]}
+{"user_input": "Exécute le balayage web sur l'index universel Google.", "expected_state_keys": ["temp:discovered_urls"]}
+{"user_input": "Rédige le dossier de candidature final et chiffre le budget.", "expected_tool_calls": ["calculate_itemized_budget"], "expected_state_keys": ["temp:application_proposal_draft"]}
