@@ -6,6 +6,7 @@ from unittest.mock import patch
 from compliance_enforcer import enforce_character_limits
 from google.adk.events import Event, EventActions
 from google.adk.runners import InMemoryRunner
+from google.genai import types
 from narrative_agent import strategic_narrative_drafter
 from schemas import (
     ExpenseLineItem,
@@ -63,6 +64,11 @@ async def run_mock_narrative_test():
             ),
         )
 
+    user_content = types.Content(
+        role="user",
+        parts=[types.Part.from_text(text="Rédige la proposition pour l'AAP sélectionné.")]
+    )
+
     with patch.object(
         strategic_narrative_drafter,
         "_run_async_impl",
@@ -71,7 +77,7 @@ async def run_mock_narrative_test():
         async for _ in runner.run_async(
             user_id="test_user",
             session_id=session.id,
-            new_message="Rédige la proposition pour l'AAP sélectionné.",
+            new_message=user_content,
         ):
             pass
 
