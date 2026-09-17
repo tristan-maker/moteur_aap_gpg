@@ -53,6 +53,8 @@ async def run_mock_narrative_test():
         app_name="moteur_aap_gpg", user_id="test_user"
     )
 
+    session.state["temp:application_proposal_draft"] = mock_proposal.model_dump()
+
     async def mock_run_async_impl(ctx):
         ctx.session.state["temp:application_proposal_draft"] = mock_proposal.model_dump()
         yield Event(
@@ -81,6 +83,11 @@ async def run_mock_narrative_test():
         ):
             pass
 
+    updated_session = await runner.session_service.get_session(
+        app_name="moteur_aap_gpg", user_id="test_user", session_id=session.id
+    )
+
+    assert updated_session is not None, "La session doit exister."
     field_limits = {"q1_pitch": 100}
     validated_proposal = enforce_character_limits(mock_proposal, field_limits)
 
