@@ -1,93 +1,139 @@
 import logging
-import sys
-from decimal import Decimal
+import os
+from typing import Dict, Any
+
+from fastapi import FastAPI, HTTPException, BackgroundTasks
+from pydantic import BaseModel, Field
+from google.adk.runners import Runner
+from google.adk.sessions import FirestoreSessionService
 
 import config
-from schemas import AAPRawMetadata
-from mcp_harvester import mock_harvest_aap_content
-from pipeline import PipelineOrchestrator
+from agent import root_agent as root_pipeline_agent, PipelineOrchestrator
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - [%(levelname)s] - %(name)s - %(message)s",
-)
+# Configuration du logging
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("GravirPourGrandir.Main")
 
+app = FastAPI(
+    title="Moteur AAP — Gravir Pour Grandir",
+    version="2.1.0-PROD",
+    description="API d'orchestration agentique sur Google Cloud & Vertex AI Agent Engine",
+)
 
-def run_e2e_pipeline_demo():
-    logger.info("DÉMARRAGE DU MOTEUR UNIVERSEL AAP — GRAVIR POUR GRANDIR")
+# Initialisation du service de session ADK en mémoire
+session_service = FirestoreSessionService()
+runner = Runner(
+    agent=root_pipeline_agent,
+    app_name="gravir_pour_grandir_aap",
+    session_service=session_service,
+)
 
-    config.validate_environment()
+# Instance globale de l'orchestrateur pour gérer les transitions de phases
+orchestrator = PipelineOrchestrator(session_service=session_service)
 
-    logger.info("Étape 1 : Simulation de la collecte d'opportunités (MCP / DocAI)")
-    mock_url = "https://fondation-partenaire.org/aap-2026-inclusion-montagne"
-    harvested_payload = mock_harvest_aap_content(mock_url)
+class WorkflowTriggerRequest(BaseModel):
+    user_id: str = "operator_prod"
+    session_id: str = "weekly_scan_session"
+    initial_trigger_message: str = "Lancer le ratissage et l'analyse hebdomadaire des appels à projets 2026."
 
-    sample_aaps = [
-        AAPRawMetadata(
-            id="aap_2026_qpv_montagne_01",
-            source_url=mock_url,
-            title="Appel à Projets 2026 — Jeunesse, Montagne et Égalité des Chances",
-            funder_name="Fondation Altitude & Inclusion",
-            extracted_grant_ceiling=Decimal("12000.00"),
-            required_annual_budget_ceiling=Decimal("350000.00"),
-            submission_deadline="2026-11-15",
-            geographic_scope="National / QPV",
-            raw_guidelines_text=harvested_payload["extracted_text"],
-        ),
-        AAPRawMetadata(
-            id="aap_2026_rejected_small_grant",
-            source_url="https://commune-exemple.fr/micro-don",
-            title="Aide Équipement Club Sportif",
-            funder_name="Ville Exemple",
-            extracted_grant_ceiling=Decimal("500.00"),
-            required_annual_budget_ceiling=Decimal("20000.00"),
-            submission_deadline="2026-09-30",
-            geographic_scope="Local",
-            raw_guidelines_text="Micro-subvention locale...",
-        ),
-    ]
+class ResumeWorkflowRequest(BaseModel):
+    user_id: str = "operator_prod"
+    session_id: str = "weekly_scan_session"
+    approved_aap_id: str = Field(..., description="ID de l'AAP validé manuellement (Tag GO)")
+    requested_grant: float = Field(..., ge=2000.0, description="Montant de la subvention sollicitée")
 
-    orchestrator = PipelineOrchestrator()
 
-    logger.info("Étape 2 : Exécution de la Phase 1 (Filtering & Screening)")
-    screened_aaps = orchestrator.run_phase_1_discovery_and_screening(sample_aaps)
+@app.get("/")
+def health_check() -> Dict[str, Any]:
+    return {
+        "status": "healthy",
+        "service": "moteur-aap-gpg",
+        "version": "2.1.0-PROD",
+    }
 
-    if not screened_aaps:
-        logger.warning("Aucun AAP n'a franchi le filtrage d'éligibilité. Fin du processus.")
-        sys.exit(0)
 
-    target_aap = screened_aaps[0]
-    logger.info(f"AAP retenu pour arbitrage HITL #1 : {target_aap.title} (ID: {target_aap.id})")
+@app.post("/run")
+@app.post("/api/v1/trigger-workflow")
+async def trigger_discovery_pipeline(
+    payload: WorkflowTriggerRequest, background_tasks: BackgroundTasks
+) -> Dict[str, Any]:
+    """Déclenche l'exécution asynchrone de la Phase 1 (Ratissage & Scoring)."""
+    try:
+        session = await session_service.get_session(
+            app_name="gravir_pour_grandir_aap",
+            user_id=payload.user_id,
+            session_id=payload.session_id,
+        )
+        if not session:
+            session = await session_service.create_session(
+                app_name="gravir_pour_grandir_aap",
+                user_id=payload.user_id,
+                session_id=payload.session_id,
+            )
 
-    logger.info("BARRIÈRE HITL #1 : Simulation du feu vert opérateur (Bascule case GO)")
-    approval_success = orchestrator.execute_hitl_checkpoint_1(approved_aap_id=target_aap.id)
+        logger.info(
+            f"🚀 Lancement du workflow ADK pour la session : {payload.session_id}"
+        )
 
-    if not approval_success:
-        logger.error("Refus ou absence de validation HITL #1. Interruption du workflow.")
-        sys.exit(1)
+        async def execute_agent_workflow():
+            try:
+                async for _ in runner.run_async(
+                    user_id=payload.user_id,
+                    session_id=payload.session_id,
+                    new_message=payload.initial_trigger_message,
+                ):
+                    pass
+                logger.info(f"✅ Workflow terminé avec succès pour {payload.session_id}")
+            except Exception as e:
+                logger.error(f"❌ Erreur critique dans l'exécution de l'agent : {e}", exc_info=True)
 
-    logger.info("Étape 3 : Exécution de la Phase 2 après déblocage humain")
-    requested_amount = 10000.0
-    final_output = orchestrator.run_phase_2_proposal_generation(
-        aap_id=target_aap.id, requested_grant=requested_amount
-    )
+        background_tasks.add_task(execute_agent_workflow)
 
-    print("\n" + "=" * 80)
-    print("RAPPORT DE LIVRAISON DE COMPILATION D'APPEL À PROJETS")
-    print("=" * 80)
-    print(f" • Identifiant AAP      : {target_aap.id}")
-    print(f" • Intitulé Programme   : {target_aap.title}")
-    print(f" • Financeur            : {target_aap.funder_name}")
-    print(f" • Statut Workflow      : {final_output['status'].upper()}")
-    print(f" • URL Document G-Docs  : {final_output['doc_url']}")
-    print(f" • Budget Total Projet  : {final_output['financial_plan']['total_project_cost']} €")
-    print(f" • Subvention Demandée  : {final_output['financial_plan']['total_grant_requested']} €")
-    print(f" • Autofinancement Asso : {final_output['financial_plan']['total_self_financing']} €")
-    print("=" * 80)
-    print("POINT D'ARRÊT HITL #2 ATTEINT : Transmis à l'équipe opérationnelle pour relecture et dépôt manuel.")
-    print("=" * 80 + "\n")
+        return {
+            "status": "initiated",
+            "session_id": payload.session_id,
+            "message": "Pipeline d'acquisition web et scoring lancé en arrière-plan.",
+        }
+    except Exception as e:
+        logger.error(f"❌ Erreur lors du déclenchement du pipeline : {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/api/v1/resume-workflow")
+def resume_workflow_phase_2(payload: ResumeWorkflowRequest) -> Dict[str, Any]:
+    """
+    Point d'arrêt HITL #1 : Déclenche la Phase 2 (Rédaction & G-Docs) 
+    après arbitrage humain sur Google Sheets.
+    """
+    try:
+        logger.info(
+            f"📥 Signal HITL reçu pour l'AAP: {payload.approved_aap_id} (Session: {payload.session_id})"
+        )
+
+        # 1. Validation de l'arbitrage (Barrière synchrone)
+        if not orchestrator.execute_hitl_checkpoint_1(payload.approved_aap_id):
+            raise HTTPException(
+                status_code=400, 
+                detail="L'ID AAP fourni n'a pas été trouvé dans le screening de cette session ou est invalide."
+            )
+
+        # 2. Exécution de la Phase 2 (Chiffrage déterministe et préparation rédaction)
+        result = orchestrator.run_phase_2_proposal_generation(
+            aap_id=payload.approved_aap_id,
+            requested_grant=payload.requested_grant
+        )
+
+        return {
+            "status": "success",
+            "phase": 2,
+            "data": result
+        }
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+    except Exception as e:
+        logger.error(f"❌ Erreur lors de la reprise du workflow : {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    run_e2e_pipeline_demo()
+    import uvicorn
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run(app, host="0.0.0.0", port=port)

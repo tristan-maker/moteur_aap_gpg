@@ -1,0 +1,25 @@
+# --- Python & Environnement ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+
+# --- Secrets & Données sensibles ---
+.env
+secrets.json
+processed_urls.json
+
+# --- IDE & Outils ---
+.vscode/
+.idea/
+
+# --- Système & Logs ---
+*.log
+.DS_Store
+
+# --- Résidus externes & Télémétrie ---
+gopath/
+.cookiecutter_replay/

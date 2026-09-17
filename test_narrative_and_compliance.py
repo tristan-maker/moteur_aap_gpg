@@ -50,7 +50,7 @@ async def run_mock_narrative_test():
 
     runner = InMemoryRunner(agent=strategic_narrative_drafter)
     session = await runner.session_service.create_session(
-        app_name="moteur_aap_gpg", user_id="test_user"
+        app_name="gravir_pour_grandir_aap", user_id="test_user"
     )
 
     session.state["temp:application_proposal_draft"] = mock_proposal.model_dump()
@@ -84,7 +84,7 @@ async def run_mock_narrative_test():
             pass
 
     updated_session = await runner.session_service.get_session(
-        app_name="moteur_aap_gpg", user_id="test_user", session_id=session.id
+        app_name="gravir_pour_grandir_aap", user_id="test_user", session_id=session.id
     )
 
     assert updated_session is not None, "La session doit exister."
