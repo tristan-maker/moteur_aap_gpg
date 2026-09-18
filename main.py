@@ -116,8 +116,6 @@ def resume_workflow_phase_2(payload: ResumeWorkflowRequest) -> Dict[str, Any]:
         )
 
         # 1. Validation de l'arbitrage (Barrière synchrone)
-        if not orchestrator.execute_hitl_checkpoint_1(payload.approved_aap_id):
-        # Correction : Ajout de await et des arguments user_id/session_id requis par l'orchestrateur
         if not await orchestrator.execute_hitl_checkpoint_1(
             payload.user_id, 
             payload.session_id, 
@@ -129,9 +127,9 @@ def resume_workflow_phase_2(payload: ResumeWorkflowRequest) -> Dict[str, Any]:
             )
 
         # 2. Exécution de la Phase 2 (Chiffrage déterministe et préparation rédaction)
-        result = orchestrator.run_phase_2_proposal_generation(
-        # Correction : Ajout de await pour cette méthode asynchrone
         result = await orchestrator.run_phase_2_proposal_generation(
+            user_id=payload.user_id,
+            session_id=payload.session_id,
             aap_id=payload.approved_aap_id,
             requested_grant=payload.requested_grant
         )
