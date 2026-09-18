@@ -3,8 +3,9 @@ Utilitaires transverses pour le projet GPG.
 """
 
 from google.cloud import secretmanager
+import config
 
-def get_secret(secret_id: str, project_id: str = "749749731644", version_id: str = "latest"):
+def get_secret(secret_id: str, project_id: str = config.GCP_PROJECT_ID, version_id: str = "latest"):
     """
     Récupère la valeur d'un secret depuis GCP Secret Manager.
 

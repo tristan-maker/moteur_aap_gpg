@@ -1,25 +1,22 @@
-# --- Python & Environnement ---
 __pycache__/
 *.py[cod]
 *$py.class
-.venv/
-venv/
-env/
-ENV/
-
-# --- Secrets & Données sensibles ---
 .env
-secrets.json
-processed_urls.json
-
-# --- IDE & Outils ---
+.venv
+env/
+venv/
+ENV/
+.pytest_cache/
 .vscode/
 .idea/
-
-# --- Système & Logs ---
 *.log
-.DS_Store
 
-# --- Résidus externes & Télémétrie ---
-gopath/
-.cookiecutter_replay/
+# Secrets et clés (sécurité)
+.auth/
+
+# Node (si installé localement)
+node_modules/
+.npm/
+
+# OS junk
+.DS_Store
