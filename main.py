@@ -74,20 +74,13 @@ async def trigger_discovery_pipeline(
         logger.info(
             f"🚀 Lancement du workflow ADK pour la session : {payload.session_id}"
         )
-
-        async def execute_agent_workflow():
-            try:
-                async for _ in runner.run_async(
-                    user_id=payload.user_id,
-                    session_id=payload.session_id,
-                    new_message=payload.initial_trigger_message,
-                ):
-                    pass
-                logger.info(f"✅ Workflow terminé avec succès pour {payload.session_id}")
-            except Exception as e:
-                logger.error(f"❌ Erreur critique dans l'exécution de l'agent : {e}", exc_info=True)
-
-        background_tasks.add_task(execute_agent_workflow)
+        
+        background_tasks.add_task(
+            run_workflow_task, 
+            payload.user_id, 
+            payload.session_id, 
+            payload.initial_trigger_message
+        )
 
         return {
             "status": "initiated",
@@ -97,6 +90,19 @@ async def trigger_discovery_pipeline(
     except Exception as e:
         logger.error(f"❌ Erreur lors du déclenchement du pipeline : {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+async def run_workflow_task(user_id: str, session_id: str, message: str):
+    """Tâche de fond isolée pour l'exécution du workflow."""
+    try:
+        async for _ in runner.run_async(
+            user_id=user_id,
+            session_id=session_id,
+            new_message=message,
+        ):
+            pass
+        logger.info(f"✅ Workflow terminé avec succès pour {session_id}")
+    except Exception as e:
+        logger.error(f"❌ Erreur critique dans l'exécution de l'agent : {e}", exc_info=True)
 
 @app.post("/api/v1/resume-workflow")
 def resume_workflow_phase_2(payload: ResumeWorkflowRequest) -> Dict[str, Any]:
@@ -111,6 +117,12 @@ def resume_workflow_phase_2(payload: ResumeWorkflowRequest) -> Dict[str, Any]:
 
         # 1. Validation de l'arbitrage (Barrière synchrone)
         if not orchestrator.execute_hitl_checkpoint_1(payload.approved_aap_id):
+        # Correction : Ajout de await et des arguments user_id/session_id requis par l'orchestrateur
+        if not await orchestrator.execute_hitl_checkpoint_1(
+            payload.user_id, 
+            payload.session_id, 
+            payload.approved_aap_id
+        ):
             raise HTTPException(
                 status_code=400, 
                 detail="L'ID AAP fourni n'a pas été trouvé dans le screening de cette session ou est invalide."
@@ -118,6 +130,8 @@ def resume_workflow_phase_2(payload: ResumeWorkflowRequest) -> Dict[str, Any]:
 
         # 2. Exécution de la Phase 2 (Chiffrage déterministe et préparation rédaction)
         result = orchestrator.run_phase_2_proposal_generation(
+        # Correction : Ajout de await pour cette méthode asynchrone
+        result = await orchestrator.run_phase_2_proposal_generation(
             aap_id=payload.approved_aap_id,
             requested_grant=payload.requested_grant
         )
