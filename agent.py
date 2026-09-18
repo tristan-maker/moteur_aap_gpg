@@ -45,8 +45,8 @@ load_dotenv()
 # Si aucune clé n'est fournie, nous configurons le SDK pour utiliser Vertex AI (authentification automatique via IAM)
 if not os.getenv("GOOGLE_API_KEY"):
     os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "true"
-    os.environ["GOOGLE_CLOUD_PROJECT"] = "aap-gpg"
-    os.environ["GOOGLE_CLOUD_LOCATION"] = "us-central1" 
+    os.environ["GOOGLE_CLOUD_PROJECT"] = config.GCP_PROJECT_ID
+    os.environ["GOOGLE_CLOUD_LOCATION"] = config.GCP_LOCATION
     logger.info("Mode Vertex AI activé : authentification automatique via IAM (sans clé API).")
 
 # --- SCHÉMAS DE DONNÉES ---
