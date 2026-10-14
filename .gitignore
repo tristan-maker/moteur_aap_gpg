@@ -1,0 +1,13 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+*.env
+gpg_agent/.env
+*credentials*.json
+*bot-key*.json
+*key*.json
+.adk/
+.DS_Store

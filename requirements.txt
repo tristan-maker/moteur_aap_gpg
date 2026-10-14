@@ -1,0 +1,19 @@
+# Framework officiel Google Agent Development Kit pour orchestrer les agents
+google-adk>=1.0.0
+# SDK Google GenAI pour communiquer avec Gemini 2.5 sur Vertex AI
+google-genai>=1.0.0
+# Validation stricte des schémas de données (contrats JSON déterministes)
+pydantic>=2.7.0
+# Client HTTP pour télécharger les pages web d'appels à projets
+httpx>=0.27.0
+# Analyseur HTML pour extraire le texte propre des sites de fondations
+beautifulsoup4>=4.12.3
+# Extracteur de texte pour lire les règlements PDF
+pdfplumber>=0.11.0
+# Clients officiels Google Workspace (Docs, Sheets, Drive)
+google-api-python-client>=2.140.0
+google-auth>=2.34.0
+# Gestion des variables d'environnement (.env)
+python-dotenv>=1.0.1
+# Tests unitaires automatisés
+pytest>=8.0.0
