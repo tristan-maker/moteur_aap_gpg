@@ -1,3 +1,6 @@
+"""
+Orchestrateur Principal ADK — Pipeline séquentiel en 3 étapes (Radar 360 -> Routeur Pydantic -> Packager Déterministe).
+"""
 import os
 import json
 import time

@@ -1,3 +1,6 @@
+"""
+Base de Connaissances Certifiée GPG — Identité juridique complète, preuves d'impact, blocs narratifs verrouillés et requêtes 360.
+"""
 from datetime import date
 
 GPG_LEGAL_IDENTITY = {

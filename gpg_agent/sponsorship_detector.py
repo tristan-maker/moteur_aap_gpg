@@ -1,3 +1,6 @@
+"""
+Détecteur de parrainage salarié & Générateur de Kit LinkedIn X-Ray + note d'invitation de 300 caractères.
+"""
 import re
 from urllib.parse import quote_plus
 import requests

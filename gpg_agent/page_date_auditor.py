@@ -1,3 +1,6 @@
+"""
+Auditeur HTML de dates réelles — Scanne le code source de la page du financeur pour bloquer les appels clos ou < J+7.
+"""
 import re
 from datetime import date
 import requests

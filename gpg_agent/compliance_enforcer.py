@@ -1,3 +1,6 @@
+"""
+Sas de sécurité central — Vérifie les doublons CRM, les dates HTML >= J+7, les exclusions métiers et déclenche la Data Room.
+"""
 from datetime import date, datetime
 from .config import GPG_LEGAL_IDENTITY, GPG_CERTIFIED_PROOFS, DETERMINISTIC_BLOCKS
 from .budget_engine import generate_deterministic_budget

@@ -1,3 +1,6 @@
+"""
+Contrats de données Pydantic imposés au routeur sémantique IA (archétypes, grilles budgétaires et booléens d'exclusion).
+"""
 from typing import Literal
 from pydantic import BaseModel, Field
 

@@ -1,3 +1,6 @@
+"""
+Connecteur Google Sheets CRM (Colonnes A à J) — Lecture anti-doublons en Python pur et enregistrement des nouveaux dossiers.
+"""
 import os
 from datetime import datetime
 from .workspace_packager import _get_workspace_services

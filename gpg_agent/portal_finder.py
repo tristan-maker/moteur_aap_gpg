@@ -1,3 +1,6 @@
+"""
+Chasseur de guichet officiel — Traverse les annuaires relais (Avise, Carenews) pour extraire le vrai lien de dépôt et les PDF.
+"""
 from urllib.parse import urljoin, urlparse
 import requests
 from bs4 import BeautifulSoup

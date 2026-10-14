@@ -1,3 +1,6 @@
+"""
+Assembleur de Data Room Google Workspace (API Drive v3, Docs v1, Sheets v4) + copie des 6 pièces du Coffre-Fort.
+"""
 import os
 from pathlib import Path
 from datetime import datetime

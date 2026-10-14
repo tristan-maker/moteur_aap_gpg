@@ -1,3 +1,6 @@
+"""
+Moteur comptable 100% déterministe en Decimal garantissant l'équilibre strict Charges == Produits au centime près.
+"""
 from decimal import Decimal, ROUND_HALF_UP
 from google.adk.tools import FunctionTool
 from .schemas import ProgramTrack
