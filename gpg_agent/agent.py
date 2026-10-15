@@ -16,7 +16,7 @@ from .schemas import SemanticRoutingDecision
 from .compliance_enforcer import assemble_deterministic_dossier
 from .crm_tracker import get_already_processed_aaps
 
-FLASH_MODEL_NAME = os.environ.get("FLASH_MODEL_ID", "gemini-2.5-flash")
+FLASH_MODEL_NAME = os.environ.get("FLASH_MODEL_ID", "gemini-3.8-flash")
 
 RESILIENT_GEMINI = Gemini(
     model=FLASH_MODEL_NAME,

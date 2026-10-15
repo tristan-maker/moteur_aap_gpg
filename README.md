@@ -7,7 +7,7 @@ Ce dépôt contient le moteur hybride (**85 % Python déterministe / 15 % IA gé
 Un agent IA classique laissé en autonomie complète risque d'inventer des chiffres financiers, de modifier l'identité juridique de l'association ou de candidater à des appels à projets expirés.
 
 Notre architecture sépare strictement les responsabilités :
-* **15 % IA Générative (`Gemini 2.5 Flash` via Google ADK)** :
+* **15 % IA Générative (`Gemini 3.8 Flash` via Google ADK)** :
   * Ratisse le web français (requêtes Grand Angle 360° + subventions publiques IDF/AURA + rotation de 25 grandes fondations).
   * Lit les critères du financeur et choisit parmi nos 4 grilles budgétaires pré-approuvées (`ALPINISME_48K`, `ALPINISME_COMPLET_54K`, `VOILE_48K`, `PASSAGE_ECHELLE_3_ANS`).
   * Rédige uniquement **un paragraphe d'accroche sur-mesure** (strictement plafonné à 700 caractères).
